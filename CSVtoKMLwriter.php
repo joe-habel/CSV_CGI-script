@@ -159,15 +159,49 @@ while(! feof($file))
 
 fclose($file);
 
+$csvdataTwo = array();
+$fileTwo = fopen("artsfest.csv","r");
+
+
+while(! feof($fileTwo))
+  {
+  array_push($csvdataTwo,(fgetcsv($fileTwo)));
+  }
+
+fclose($fileTwo);
 
 $Placemarks = array();
-foreach ($csvdata as $line)
+
+if( $_GET['campus'] == "skip")
 {
-    $Placemark = array();
-    array_push($Placemark,$line[0],$line[1],$line[5],$line[4],$line[6],dateToInt($line[1]));
-    array_push($Placemarks,$Placemark);
-    
+    $a=0
 }
+else
+{
+        foreach ($csvdata as $line)
+    {
+        $Placemark = array();
+        array_push($Placemark,$line[0],$line[1],$line[5],$line[4],$line[6],dateToInt($line[1]));
+        array_push($Placemarks,$Placemark);
+    
+    }
+}
+
+if( $_GET['downtown'] === NULL)
+{
+    $a=0
+}
+else
+{
+        foreach ($csvdataTwo as $line)
+    {
+        $Placemark = array();
+        array_push($Placemark,$line[0],$line[1],$line[5],$line[4],$line[6],dateToInt($line[1]));
+        array_push($Placemarks,$Placemark);
+    
+    }
+}
+
 $Placemarks = array_slice($Placemarks,1);
 
 if (($_GET['topics'] === NULL) && ($_GET['startyear'] === NULL))
